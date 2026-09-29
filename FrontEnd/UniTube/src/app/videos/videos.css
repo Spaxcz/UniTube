@@ -3,19 +3,27 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    height: 100%;
-    width: 100%;
+    flex-direction: column;
+    padding: 2rem;
 }
 
 mat-form-field{
     width: 75%;
 }
 
-.card{
+.card-left{
     border: 1px solid #292828;
     border-radius: 1rem;
+    width: 40%;
     padding: 1rem;
-    width: 40vw;
+
+}
+.card-right{
+    border: 1px solid #292828;
+    border-radius: 1rem;
+    width: 40%;
+    padding: 1rem;
+    margin-top: 2rem;
 }
 
 .links{
