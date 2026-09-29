@@ -1,0 +1,38 @@
+.tela-login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+}
+
+.card{
+    border: 1px solid #292828;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.links{
+    margin-top: 1rem;
+    height: 5vw;
+}
+
+.button{
+    padding: 10px 20px;
+    border: 1px solid #292828;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.button:hover {
+    background-color: #292828;
+    color: #fff;
+}
+
+.centralizar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

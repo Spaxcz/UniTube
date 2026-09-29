@@ -1,0 +1,35 @@
+<div class="tela-login">
+
+    <div class="card">
+        <h1>Cadastro de Videos</h1>
+        <div class="inputs">
+
+            <form [formGroup]="videoForm" class ="centralizar">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Titulo</mat-label>
+                    <input type="text" formControlName="titulo" matInput placeholder="Digite o titulo do vídeo">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Curso</mat-label>
+                    <input type="text" formControlName="curso" matInput placeholder="Digite o curso">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Professor</mat-label>
+                    <input type="text" formControlName="professor" matInput placeholder="Digite o professor">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Data</mat-label>
+                    <input type="number" formControlName="data" matInput placeholder="Digite a data">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Duração</mat-label>
+                    <input type="number" formControlName="duracao" matInput placeholder="Digite a duração">
+                </mat-form-field>
+
+            </form>
+            <button [disabled]="videoForm.invalid" (click)="enviarDados()" class="button">Criar Video</button >
+            </div>
+    </div>
+    
+</div>
