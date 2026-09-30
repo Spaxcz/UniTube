@@ -1,35 +1,76 @@
 <div class="tela-login">
+    <div class="card-left">
 
-    <div class="card">
-        <h1>Cadastro de Videos</h1>
+        <h1> Cadastro de Videos </h1>
+
         <div class="inputs">
 
-            <form [formGroup]="videoForm" class ="centralizar">
+            <form [formGroup]="videoForm" class="centralizar">
 
                 <mat-form-field appearance="outline">
-                    <mat-label>Titulo</mat-label>
+                    <mat-label> Titulo </mat-label> 
                     <input type="text" formControlName="titulo" matInput placeholder="Digite o titulo do vídeo">
                 </mat-form-field>
+
+
                 <mat-form-field appearance="outline">
-                    <mat-label>Curso</mat-label>
+                    <mat-label> Curso </mat-label>
                     <input type="text" formControlName="curso" matInput placeholder="Digite o curso">
                 </mat-form-field>
+
+
                 <mat-form-field appearance="outline">
-                    <mat-label>Professor</mat-label>
+                    <mat-label> Professor </mat-label>
                     <input type="text" formControlName="professor" matInput placeholder="Digite o professor">
                 </mat-form-field>
+
+
                 <mat-form-field appearance="outline">
-                    <mat-label>Data</mat-label>
+                    <mat-label> Data </mat-label>
                     <input type="number" formControlName="data" matInput placeholder="Digite a data">
                 </mat-form-field>
+
+
                 <mat-form-field appearance="outline">
-                    <mat-label>Duração</mat-label>
+                    <mat-label> Duração </mat-label>
                     <input type="number" formControlName="duracao" matInput placeholder="Digite a duração">
                 </mat-form-field>
 
             </form>
-            <button [disabled]="videoForm.invalid" (click)="enviarDados()" class="button">Criar Video</button >
-            </div>
+
+            <button [disabled]="videoForm.invalid" (click)="criarVideo()" class="button">
+                @if (videoEditandoId === null) {
+                    Criar Video
+                } @else {
+                    Atualizar Video
+                }
+            </button>
+
+            @if (videoEditandoId !== null) {
+                <button (click)="cancelarEdicao()" class="button"> Cancelar </button>
+            }
+
+        </div>
     </div>
-    
+
+
+    <div class="card-right">
+
+        <h1> Videos Cadastrados </h1>
+        @for (video of videos; track video.id) {
+
+            <div class="video">
+
+                <h2>{{ video.titulo }}</h2>
+                <p><strong> Curso: </strong>{{ video.curso }}</p>
+                <p><strong> Professor: </strong>{{ video.professor }}</p>
+                <p><strong> Data: </strong>{{ video.data }}</p>
+                <p><strong> Duração: </strong>{{ video.duracao }}</p>
+
+                <button (click)="editarVideo(video)" class="button"> Editar </button>
+
+                <button (click)="deletarVideo(video.id)" class="button"> Excluir </button>
+
+            </div>        }
+    </div>
 </div>

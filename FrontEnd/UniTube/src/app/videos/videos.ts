@@ -11,9 +11,9 @@ import { debounceTime } from 'rxjs';
 @Component({
   selector: 'app-videos',
   imports: [
-    MatIconModule, 
-    MatDividerModule, 
-    MatButtonModule, 
+    MatIconModule,
+    MatDividerModule,
+    MatButtonModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule
@@ -25,43 +25,108 @@ export class Videos implements OnInit {
 
   videoForm!: FormGroup;
 
+  videos: any[] = [];
+
+  videoEditandoId: number | null = null;
+
+  private url = "http://localhost:8080/videos";
+
   constructor(
     private formBuilder: FormBuilder,
     private httpClient: HttpClient,
-  ){}
+  ) {}
 
   ngOnInit(): void {
+
     this.criarFormulario();
 
-    this.videoForm.valueChanges.pipe(debounceTime(400)).subscribe((res) => {
-      console.log(res);
-    })
+    this.videoForm.valueChanges
+      .pipe(debounceTime(400))
+      .subscribe((res) => {
+        console.log(res);
+      });
 
-    this.httpClient.get("http://localhost:8080/videos").subscribe((res) => {
-      console.log(res);
-      
-    })
+    this.buscarTodos();
+
   }
 
   private criarFormulario(): void {
-    this.videoForm = this.formBuilder.group ({
-      titulo: [ "" , Validators.required ],
-      curso: [ "" , Validators.required ], 
-      professor: [ "" , Validators.required ],
-      data: [ null , Validators.required ], 
-      duracao: [ null , Validators.required ]
+
+    this.videoForm = this.formBuilder.group({
+      titulo: ["", Validators.required],
+      curso: ["", Validators.required],
+      professor: ["", Validators.required],
+      data: [null, Validators.required],
+      duracao: [null, Validators.required]
     });
   }
 
-  public enviarDados() {
-    console.log(this.videoForm.valid);
-    console.log(this.videoForm.getRawValue());
+  public buscarTodos(): void {
+    this.httpClient.get<any[]>(this.url).subscribe((res) => {
+        this.videos = res;
+        console.log(this.videos);
+      });
+  }
 
-    if (this.videoForm.valid) {
-      console.log("Envie para o BackEnd.")
-      this.httpClient.post("http://localhost:8080/videos", this.videoForm.getRawValue()).subscribe(() => { 
-      
-      })
+  public criarVideo(): void {
+
+    if (this.videoForm.invalid) {
+      return;
+    }
+
+    if (this.videoEditandoId === null) {
+
+      this.httpClient.post<any>(this.url,this.videoForm.getRawValue()).subscribe((videoCriado) => {
+
+        console.log("Vídeo criado!");
+
+        this.videos = [...this.videos,videoCriado];
+        this.videoForm.reset();
+      });
+
+    }
+
+    else {
+
+      this.httpClient.put<any>(`${this.url}/${this.videoEditandoId}`,this.videoForm.getRawValue()).subscribe((videoAtualizado) => {
+        
+        console.log("Vídeo atualizado!");
+
+        this.videos = this.videos.map(video =>video.id === videoAtualizado.id? videoAtualizado: video);
+        this.videoEditandoId = null;
+        this.videoForm.reset();
+      });
     }
   }
+
+  public editarVideo(video: any): void {
+
+    this.videoEditandoId = video.id;
+
+    this.videoForm.patchValue({
+      titulo: video.titulo,
+      curso: video.curso,
+      professor: video.professor,
+      data: video.data,
+      duracao: video.duracao
+    });
+  }
+
+  public deletarVideo(id: number): void {
+
+    this.httpClient.delete(`${this.url}/${id}`).subscribe(() => {
+
+      console.log("Vídeo deletado!");
+      this.videos = this.videos.filter(video => video.id !== id);
+      this.videoForm.reset();
+
+    });
+  }
+
+  public cancelarEdicao(): void {
+
+    this.videoEditandoId = null;
+    this.videoForm.reset();
+  }
+
 }

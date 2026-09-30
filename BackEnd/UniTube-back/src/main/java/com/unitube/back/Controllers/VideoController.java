@@ -55,7 +55,7 @@ public class VideoController {
 	
 	@DeleteMapping("/{id}")
 	private ResponseEntity<Void> deletarVideo(@PathVariable Long id){
-		videoService.deleterVideo(id);
+		videoService.deletarVideo(id);
 		return ResponseEntity.noContent().build();
 	}
 

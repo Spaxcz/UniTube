@@ -52,7 +52,7 @@ public class VideoService {
 		
 	}
 	
-	public void deleterVideo(Long id) {
+	public void deletarVideo(Long id) {
 		videoRepository.deleteById(id);
 	}
 }
