@@ -1,0 +1,152 @@
+# CONSULTAS MONGODB – UNITUBE
+
+## Nome dos Alunos: Caio José Pereira Brasil e Camile Vitória Vieira Brasil
+## Respectivas Matrículas: 2515050014 e 2515050013
+
+## Operações e consultas MongoDB utilizando as duas entidades da Fase 1 do projeto
+## UniTube: Video e Professor 
+## Os operadores solicitados foram distribuídos entre as duas coleções.
+
+
+# 1. Entidades utilizadas
+
+## Entidade Video – coleção: videos
+
+id
+titulo
+curso
+professor
+data
+duracao
+
+## Entidade Professor – coleção: professores
+
+id
+cpf
+nome
+curso
+
+
+# 2. Operações na coleção videos
+
+### 2.1 InsertOne
+Insere um vídeo na coleção.
+
+db.videos.insertOne({
+  titulo: "Introdução ao Java",
+  curso: "ADS",
+  professor: "João Silva",
+  data: 2026,
+  duracao: 60
+})
+
+### 2.2 InsertMany
+Insere vários vídeos de uma vez.
+
+db.videos.insertMany([
+  { titulo: "MongoDB Básico", curso: "ADS", professor: "Maria", data: 2026, duracao: 45 },
+  { titulo: "Angular", curso: "ADS", professor: "Carlos", data: 2026, duracao: 70 },
+  { titulo: "Spring Boot", curso: "ADS", professor: "Ana", data: 2026, duracao: 90 }
+])
+
+### #2.3 find()
+Retorna todos os documentos da coleção videos.
+
+db.videos.find()
+
+### 2.4 find({atributo: "valor"})
+Retorna os vídeos cujo curso é ADS.
+
+db.videos.find({ curso: "ADS" })
+
+### 2.5 updateOne
+Atualiza a duração de um vídeo específico.
+
+db.videos.updateOne(
+  { titulo: "Angular" },
+  { $set: { duracao: 80 } }
+)
+
+### 2.7 $eq
+Busca vídeos cuja duração seja exatamente 60.
+
+db.videos.find({ duracao: { $eq: 60 } })
+
+### 2.9 $gt
+Busca vídeos com duração maior que 60 minutos.
+
+db.videos.find({ duracao: { $gt: 60 } })
+
+### 2.10 $gte
+Busca vídeos com duração maior ou igual a 60 minutos.
+
+db.videos.find({ duracao: { $gte: 60 } })
+
+### 2.11 $lt
+Busca vídeos com duração menor que 60 minutos.
+
+db.videos.find({ duracao: { $lt: 60 } })
+
+### 2.12 $lte
+Busca vídeos com duração menor ou igual a 60 minutos.
+
+db.videos.find({ duracao: { $lte: 60 } })
+
+### 2.15 $or
+Busca vídeos que sejam do curso ADS ou tenham duração maior que 80 minutos.
+
+db.videos.find({
+  $or: [
+    { curso: "ADS" },
+    { duracao: { $gt: 80 } }
+  ]
+})
+
+
+## 3. Operações na coleção professores
+
+### 3.8 $ne
+Busca professores cujo curso seja diferente de ADS.
+
+db.professores.find({ curso: { $ne: "ADS" } })
+
+### 3.13 $in
+Busca professores que pertençam a um dos cursos informados.
+
+db.professores.find({ curso: { $in: ["ADS", "TI"] } })
+
+### 3.14 $nin
+Busca professores que não pertençam aos cursos informados.
+
+db.professores.find({ curso: { $nin: ["ADS", "TI"] } })
+
+### 3.16 $and
+Busca professores que sejam do curso ADS e tenham um nome informado.
+
+db.professores.find({
+  $and: [
+    { curso: "ADS" },
+    { nome: "Maria" }
+  ]
+})
+
+### 3.17 $exists
+Busca professores que possuem o campo cpf.
+
+db.professores.find({ cpf: { $exists: true } })
+
+### 3.6 deleteOne
+Exclui um professor pelo CPF. 
+
+db.professores.deleteOne({ cpf: "00000000000" })
+
+
+## 4. Consulta combinando operadores
+Retornando vídeos com duração entre 60 e 90 minutos, incluindo os limites.
+
+db.videos.find({
+  duracao: {
+    $gte: 60,
+    $lte: 90
+  }
+})
