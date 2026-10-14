@@ -1,21 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-login',
-  imports: [
-    MatIconModule, 
-    MatDividerModule, 
-    MatButtonModule, 
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatInputModule
-  ],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
   standalone: true
@@ -37,8 +25,6 @@ export class Login implements OnInit {
       login: [ "" , Validators.required ],
       password: [ "" , Validators.required ] 
     });
-    console.log("loginForm", this.loginForm);
-    console.log("olá");
   }
 
   public enviarDados() {
