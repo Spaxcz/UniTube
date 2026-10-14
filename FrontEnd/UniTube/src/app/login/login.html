@@ -1,27 +1,22 @@
 <div class="tela-login">
 
-    <div class="card">
-        <h1>Seja Bem-Vindo</h1>
-        <div class="inputs">
+    <div class="original-card">
 
-            <form [formGroup]="loginForm" class ="centralizar">
-                <mat-form-field appearance="outline">
-                    <mat-label>Login</mat-label>
-                    <input type="text" formControlName="login" matInput placeholder="Digite seu login">
-                </mat-form-field>
-
-                <mat-form-field appearance="outline">
-                    <mat-label>Password</mat-label>
-                    <input type="password" formControlName="password" matInput placeholder="Digite sua senha">
-                </mat-form-field>
-            </form>
-
+        <div class = "left-card">
+            <h1> Teste </h1>
         </div>
-        <button (click)="enviarDados()" class="button">Enter</button >
-        <div class ="links centralizar">
-            <a href="">Esqueci a senha</a>
-            <a href="">Cadastre-se</a>
+
+        <div class="right-card">
+
+            <h1> Bem-Vindo </h1>
+            <div class="inputs">
+                <form [formGroup]="loginForm" class ="centralizar">
+                        <input type="text" formControlName="login" id="login" placeholder="Digite seu login">
+                        <input type="password" formControlName="password" id="password" placeholder="Digite sua senha">
+                </form>
+            </div>
+            <button (click)="enviarDados()" class="button">Enter</button>
+
         </div>
     </div>
-
 </div>
